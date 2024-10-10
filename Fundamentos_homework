@@ -1,0 +1,40 @@
+public class AplicacionCuenta {
+    public static void main(String[] args) {
+        Cuenta c1, c2;
+        c1 = new Cuenta();
+        c1.depositar(500);
+        c1.mostrar();
+        c1.depositar(1000);
+        c1.mostrar();
+        c2 = new Cuenta();
+        c2.mostrar();
+        c2.retirar(500);
+        c2.mostrar();
+        c2.depositar(1000);
+        c2.mostrar();
+        c2.retirar(500);
+        c2.mostrar();
+    }
+}
+
+public class Cuenta{
+    public double saldo = 0;
+    
+    public void depositar(int deposito) {
+        saldo += deposito;
+        mostrar();
+    }
+    
+    public void retirar(int retiro) {
+        if (saldo >= retiro){
+            saldo -= retiro;
+            mostrar();
+        }
+        else
+            System.out.println("no se puede retirar dicha cantidad, exede al saldo");
+    }
+
+    public void mostrar() {
+        System.out.println("el saldo actual es " + saldo + " Soles.");
+    } 
+}
