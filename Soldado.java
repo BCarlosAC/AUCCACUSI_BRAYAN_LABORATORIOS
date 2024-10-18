@@ -1,9 +1,11 @@
+package L5;
+
 public class Soldado {
     private String nombre;
     private int vida;
     private int fila;
-    private String columna;
-    private boolean estado;
+    private char columna;
+    private boolean estado = false;
 
     //Metodos mutadores
     public void setNombre( String n){
@@ -12,7 +14,7 @@ public class Soldado {
     public void setFila(int f){
         fila = f;
     }
-    public void setColumna(String c){
+    public void setColumna(char c){
         columna = c;    
     }
     public void setVida(int v){
@@ -30,15 +32,18 @@ public class Soldado {
     public int getFila(){
         return fila;
     }
-    public String getColumna(){
+    public char getColumna(){
         return columna;
     }
-    public int gerVida(){
+    public int getVida(){
         return vida;
     }
     public boolean getEstado(){
         return estado;
     }
 
-    // Completar con otros métodos necesarios
+    public String toString(){
+        return "Nombre: " + getNombre() + "    Vida: " + getVida() + 
+            "    Fila " + (getFila() + 1) + "    Columna: " + getColumna();
+    }
 }
