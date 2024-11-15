@@ -1,4 +1,4 @@
-package L6;
+package L7;
 
 public class Soldado {
     private String nombre;
