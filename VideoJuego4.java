@@ -65,111 +65,43 @@ public class VideoJuego4 {
     }
 
 
-    public static void mostrarMayorVida(ArrayList<ArrayList<Soldado>> campo){
-        Soldado mayor1 = new Soldado();
-        Soldado mayor2 =  new Soldado();
-
-        mayor1.setVida(1);
-        mayor2.setVida(1);
-        int filMayorX1 = 0, colMayorX1 = 0, filMayorX2 = 0, colMayorX2 = 0;
-        // Recorremos todo el campo de batalla (array bidimensional)
-        for (int i = 0; i < campo.size(); i++){
-            for(int j = 0; j < campo.get(i).size();  j++){
-                // Verificamos que haya un soldado en la posición actual
-                if (campo.get(i).get(j) != null){
-                    // Si el soldado pertenece al ejército 1 y tiene más vida que el actual mayor1
-                    if(campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '1' &&
-                    campo.get(i).get(j).getVida() > mayor1.getVida()){
-                        // Actualizamos el soldado mayor1 y su posición
-                        mayor1 = campo.get(i).get(j);
-                        filMayorX1 = i;
-                        colMayorX1 = j;
-                    }
-                    // Si el soldado pertenece al ejército 2 y tiene más vida que el actual mayor2
-                    if(campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '2' &&
-                    campo.get(i).get(j).getVida() > mayor2.getVida()){
-                        // Actualizamos el soldado mayor2 y su posición
-                        mayor2 = campo.get(i).get(j);
-                        filMayorX2 = i;
-                        colMayorX2   = j;
-                    }
-                } 
-                
+    public static int mayorVida(Soldado[] ej){
+        int indexMayor = 0;
+        for(int i = 0; i < ej.length - 1; i++){
+            if(ej[indexMayor].getVida() < ej[i].getVida()){
+                indexMayor = i;
             }
         }
-        System.out.println("El soldado con mayor nivel de vida del ejercito X1 es: ");
-        System.out.println(campo.get(filMayorX1).get(colMayorX1).toString());
-        System.out.println("\nEl soldado con mayor nivel de vida del ejercito X1 es: ");
-        System.out.println(campo.get(filMayorX2).get(colMayorX2).toString());
+        return indexMayor;
     }
 
-
-    public static void promedioVida(ArrayList<ArrayList<Soldado>> campo){
-        double sumEj1 = 0, sumEj2 = 0;
-        // Recorre todo el campo de soldados
-        for(int i = 0; i < campo.size(); i++){
-            for(int j = 0; j < campo.get(i).size(); j++){
-                // Si la posición actual contiene un soldado, suma su vida al total
-                if(campo.get(i).get(j) != null){
-                    if(campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '1'){
-                        // Acumula el valor de la vida del soldado
-                        sumEj1 +=campo.get(i).get(j).getVida();
-                    }
-                    if(campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '2'){
-                        // Acumula el valor de la vida del soldado
-                        sumEj2 +=campo.get(i).get(j).getVida();
-                    }
-                }
-                
-            }
+    public static double promedioEjercito(Soldado[] ej){
+        double sumLife = 0;
+        for(int i = 0; i < ej.length - 1; i++){
+            sumLife += ej[i].getVida();
         }
-        System.out.println("\nEl promedio de vida de los soldados del ejercito 1 es: " + (sumEj1 / 10));
-        System.out.println("El promedio de vida de los soldados del ejercito 2 es: " + (sumEj2 / 10));
+        return sumLife/ej.length;
     }
 
-
-    public static void mostrar(ArrayList<ArrayList<Soldado>> campo){
-        System.out.println();
-        // Recorre todo el campo de soldados
-        System.out.println("Ejercito 1:");
-        for (int i = 0; i < campo.size(); i++){
-            for (int j = 0; j < campo.get(i).size(); j++){
-            // Si hay un soldado en la posición actual, imprime su información
-                if(campo.get(i).get(j) != null){
-                    if (campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '1'){
-                        System.out.println(campo.get(i).get(j).toString());
-                    }
-                }
-            }
-        }
-        System.out.println("Ejercito 2:");
-        for (int i = 0; i < campo.size(); i++){
-            for (int j = 0; j < campo.get(i).size(); j++){
-            // Si hay un soldado en la posición actual, imprime su información
-                if(campo.get(i).get(j) != null){
-                    if (campo.get(i).get(j).getNombre().charAt(campo.get(i).get(j).getNombre().length() - 1) == '2'){
-                        System.out.println(campo.get(i).get(j).toString());
-                    }
-                }
-            }
+    //Muestra el orden de creacion de los soldados, esto porque al asignar soldados al array
+    //lo hicimos de manera ordenada, ademas puede reutilizarse en otros metodos.
+    public static void mostrar(Soldado[] ej, int a){
+        System.out.println("Ejercito " + a);
+        for(Soldado sold : ej){
+            System.out.println(sold);
         }
     }
     
-    
-    public static void aleatorio(ArrayList<ArrayList<Soldado>> campo){
+    public static void aleatorio(Soldado[] ej){
         Random rand = new Random();
-        Soldado temp;
-        // Recorre todo el campoo de soldados
-        for (int i = 0; i < campo.size(); i++){
-            for (int j = 0; j < campo.get(i).size(); j++){
-                // Genera una fila y columna aleatoria dentro de la matriz
-                int randFila = rand.nextInt(campo.size());
-                int randColumna = rand.nextInt(campo.get(0).size());
-                 // Intercambia el soldado en (i, j) con uno en una posición aleatoria (randFila, randColumna)
-                temp = campo.get(i).get(j);
-                campo.get(i).set(j, campo.get(randFila).get(randColumna));
-                campo.get(randFila).set(randColumna, temp);
-            }
+        Soldado aux;
+        int r1, r2;
+        for(int i = 0; i < ej.length; i++){
+            r1 = rand.nextInt(10) + 1;
+            r2 = rand.nextInt(10) + 1;
+            aux = ej[r1];
+            ej[r1] = ej[r2];
+            ej[r2] = aux;
         }
     }
 
