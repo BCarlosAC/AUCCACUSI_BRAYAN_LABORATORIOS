@@ -3,13 +3,12 @@ import java.util.*;
 public class VideoJuego4 {
     public static void main(String [] args){
         Random rand = new Random();
-        ArrayList<ArrayList<Soldado>> campo = new ArrayList<>();
-        for (int i = 0; i < 10; i++){
-            campo.add(new ArrayList<Soldado>());
-            for(int j = 0; j < 10 ; j++){
-                campo.get(i).add(null);
-            }
-        }
+        Soldado[][] campo = new Soldado[10][10];
+        Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
+        Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
+        crearSoldados(ej1, '+');
+        crearSoldados(ej2, '*');
+        
         int i = 1;
         while(i <= 20) {
             int fila = rand.nextInt(10);
@@ -61,6 +60,17 @@ public class VideoJuego4 {
         rankingMayorMenorSeleccion(campo);
         mostrar(campo);
         determinarGanador(campo);
+    }
+    public static void crearSoldados(Soldado[] ej, char a){
+        Random rand = new Random();
+        for(int i = 0; i < ej.length; i++){
+            ej[i] = new Soldado();
+            ej[i].setVida(rand.nextInt(5) + 1);
+            if(i == 10)
+                ej[i].setNombre("" + i + a + ej[i].getVida());
+            else
+                ej[i].setNombre("0"+ i + a + ej[i].getVida());
+        }
     }
 
 
