@@ -11,32 +11,33 @@ public class VideoJuego4 {
         asignarSoldados(campo, ej1);
         asignarSoldados(campo, ej2);
         mostrarTabla(campo);
-        System.out.println("Mayor vida ejercito 1: \n" + ej1[mayorVida(ej1)]);
-        System.out.println("Mayor vida ejercito 2: \n" + ej2[mayorVida(ej2)]);
-        System.out.println("Promedio vida ejercito 1: " + promedioEjercito(ej1));
+        System.out.println("Mayor vida ejercito 1: \n\t" + ej1[mayorVida(ej1)]);
+        System.out.println("Mayor vida ejercito 2: \n\t" + ej2[mayorVida(ej2)]);
+        System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
         System.out.println("Promedio vida ejercito 2: " + promedioEjercito(ej1));
-        System.out.println("Datos en que fueron creados");
+        System.out.println("\nDatos en orden que fueron creados");
         mostrar(ej1, 1);
         mostrar(ej2, 2);
-        System.out.println("Ranking de poder mayor a menor vida");
+        System.out.println("\nRanking de poder mayor a menor vida");
         System.out.println("BURBUJA");
         rankingMayorMenorBurbuja(ej1);
         mostrar(ej1, 1);
         rankingMayorMenorBurbuja(ej2);
         mostrar(ej2, 2);
 
-        System.out.println("Aleatorio");
+        System.out.println("\nAleatorio");
         aleatorio(ej1);
         aleatorio(ej2);
         mostrar(ej1, 1);
         mostrar(ej2, 2);
 
-        System.out.println("SELECCION");
+        System.out.println("\nSELECCION");
         rankingMayorMenorSeleccion(ej1);
         mostrar(ej1, 1);
         rankingMayorMenorSeleccion(ej2);
         mostrar(ej2, 2);
-
+        
+        System.out.println();
         determinarGanador(ej1, ej2);
     }
     
@@ -45,10 +46,7 @@ public class VideoJuego4 {
         for(int i = 0; i < ej.length; i++){
             ej[i] = new Soldado();
             ej[i].setVida(rand.nextInt(5) + 1);
-            if(i == 10)
-                ej[i].setNombre("" + ej[i].getVida() + a);
-            else
-                ej[i].setNombre("" + ej[i].getVida() + a);
+                ej[i].setNombre(i + "." + a + ej[i].getVida());
         }
     }
     public static void asignarSoldados(Soldado[][] campo, Soldado[] ej){
@@ -72,8 +70,9 @@ public class VideoJuego4 {
 
 
     public static void mostrarTabla(Soldado[][] campo){
+        System.out.print("  ");
         for(char i = 'A'; i < 'K'; i++){
-            System.out.print("   " + i + "  ");
+            System.out.print("   " + i + " ");
         }
         System.out.println();
         for(int i = 0; i < campo.length; i++){
@@ -84,12 +83,12 @@ public class VideoJuego4 {
 
             for(int j = 0; j < campo[i].length; j++){
                 if (campo[i][j] != null)
-                    System.out.print(" |" + campo[i][j].getNombre());
+                    System.out.print("|" + campo[i][j].getNombre());
                 else
-                    System.out.print(" |  ");
+                    System.out.print("|    ");
             }
             System.out.println(" |");
-            System.out.println("   -----------------------------------------");
+            System.out.println("  ----------------------------------------------------");
         }
     }
 
@@ -165,6 +164,8 @@ public class VideoJuego4 {
         double sumLifeEj1 = 0, sumLifeEj2 = 0;
         for(int i = 0; i < ej1.length; i++){
             sumLifeEj1 += ej1[i].getVida();
+        }
+        for(int i = 0; i < ej2.length; i++){
             sumLifeEj2 += ej2[i].getVida();
         }
         if (sumLifeEj1 == sumLifeEj2) {
