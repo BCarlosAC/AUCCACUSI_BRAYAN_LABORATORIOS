@@ -2,43 +2,51 @@ package L7;
 import java.util.*;
 public class VideoJuego4 {
     public static void main(String [] args){
-        Random rand = new Random();
-        Soldado[][] campo = new Soldado[10][10];
-        Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
-        Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
-        crearSoldados(ej1, '@');
-        crearSoldados(ej2, '?');
-        asignarSoldados(campo, ej1);
-        asignarSoldados(campo, ej2);
-        mostrarTabla(campo);
-        System.out.println("Mayor vida ejercito 1: \n\t" + ej1[mayorVida(ej1)]);
-        System.out.println("Mayor vida ejercito 2: \n\t" + ej2[mayorVida(ej2)]);
-        System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
-        System.out.println("Promedio vida ejercito 2: " + promedioEjercito(ej1));
-        System.out.println("\nDatos en orden que fueron creados");
-        mostrar(ej1, 1);
-        mostrar(ej2, 2);
-        System.out.println("\nRanking de poder mayor a menor vida");
-        System.out.println("BURBUJA");
-        rankingMayorMenorBurbuja(ej1);
-        mostrar(ej1, 1);
-        rankingMayorMenorBurbuja(ej2);
-        mostrar(ej2, 2);
+        char decicion = 'y';
+        while(decicion == 'y'){
+            Scanner sc = new Scanner(System.in);
+            Random rand = new Random();
+            Soldado[][] campo = new Soldado[10][10];
+            Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
+            Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
+            crearSoldados(ej1, '@');
+            crearSoldados(ej2, '?');
+            asignarSoldados(campo, ej1);
+            asignarSoldados(campo, ej2);
+            mostrarTabla(campo);
+            System.out.println("Mayor vida ejercito 1: \n\t" + ej1[mayorVida(ej1)]);
+            System.out.println("Mayor vida ejercito 2: \n\t" + ej2[mayorVida(ej2)]);
+            System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
+            System.out.println("Promedio vida ejercito 2: " + promedioEjercito(ej1));
+            System.out.println("\nDatos en orden que fueron creados");
+            mostrar(ej1, 1);
+            mostrar(ej2, 2);
+            System.out.println("\nRanking de poder mayor a menor vida");
+            System.out.println("BURBUJA");
+            rankingMayorMenorBurbuja(ej1);
+            mostrar(ej1, 1);
+            rankingMayorMenorBurbuja(ej2);
+            mostrar(ej2, 2);
+    
+            System.out.println("\nAleatorio");
+            aleatorio(ej1);
+            aleatorio(ej2);
+            mostrar(ej1, 1);
+            mostrar(ej2, 2);
+    
+            System.out.println("\nSELECCION");
+            rankingMayorMenorSeleccion(ej1);
+            mostrar(ej1, 1);
+            rankingMayorMenorSeleccion(ej2);
+            mostrar(ej2, 2);
+    
+            System.out.println();
+            determinarGanador(ej1, ej2);
 
-        System.out.println("\nAleatorio");
-        aleatorio(ej1);
-        aleatorio(ej2);
-        mostrar(ej1, 1);
-        mostrar(ej2, 2);
-
-        System.out.println("\nSELECCION");
-        rankingMayorMenorSeleccion(ej1);
-        mostrar(ej1, 1);
-        rankingMayorMenorSeleccion(ej2);
-        mostrar(ej2, 2);
+            System.out.print("Desea iniciar un nuevo juego? (y/n): ");
+            decicion = sc.nextLine().charAt(0);
+        }
         
-        System.out.println();
-        determinarGanador(ej1, ej2);
     }
     
     public static void crearSoldados(Soldado[] ej, char a){
@@ -67,8 +75,6 @@ public class VideoJuego4 {
         }
     
     }
-
-
     public static void mostrarTabla(Soldado[][] campo){
         System.out.print("  ");
         for(char i = 'A'; i < 'K'; i++){
@@ -91,8 +97,6 @@ public class VideoJuego4 {
             System.out.println("  ----------------------------------------------------");
         }
     }
-
-
     public static int mayorVida(Soldado[] ej){
         int indexMayor = 0;
         for(int i = 0; i < ej.length - 1; i++){
@@ -145,7 +149,6 @@ public class VideoJuego4 {
         }
     }
     
-
     public static void rankingMayorMenorSeleccion(Soldado[] ej){
         for (int i = 0; i < ej.length - 1; i++){
             int indexMayor = i;
@@ -158,7 +161,6 @@ public class VideoJuego4 {
             ej[indexMayor] = aux;
         }
     }
-
     
     public static void determinarGanador(Soldado[] ej1, Soldado[] ej2){
         double sumLifeEj1 = 0, sumLifeEj2 = 0;
