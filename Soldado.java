@@ -4,7 +4,7 @@ public class Soldado {
     private String nombre;
     private int vida;
     private int fila;
-    private char columna;
+    private int columna;
     private boolean estado = false;
 
     //Metodos mutadores
@@ -14,7 +14,7 @@ public class Soldado {
     public void setFila(int f){
         fila = f;
     }
-    public void setColumna(char c){
+    public void setColumna(int c){
         columna = c;    
     }
     public void setVida(int v){
@@ -32,7 +32,7 @@ public class Soldado {
     public int getFila(){
         return fila;
     }
-    public char getColumna(){
+    public int getColumna(){
         return columna;
     }
     public int getVida(){

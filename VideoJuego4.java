@@ -6,60 +6,11 @@ public class VideoJuego4 {
         Soldado[][] campo = new Soldado[10][10];
         Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
         Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
-        crearSoldados(ej1, '+');
-        crearSoldados(ej2, '*');
-        
-        int i = 1;
-        while(i <= 20) {
-            int fila = rand.nextInt(10);
-            int columna = rand.nextInt(10);
-            while(campo.get(fila).get(columna) != null){
-                fila = rand.nextInt(10);
-                columna = rand.nextInt(10);
-            }
-            Soldado soldado = new Soldado();
-            if(i <= 10){
-                if(i == 10){
-                    soldado.setNombre("Soldado10X1");
-                } else {
-                    soldado.setNombre("Soldado0" + i + "X1");
-                }
-            }
-
-            if(i > 10){
-                if(i == 20){
-                    soldado.setNombre("Soldado10X2");
-                } else {
-                    soldado.setNombre("Soldado0" + (i - 10 )+ "X2");
-                }
-            }
-            
-            soldado.setVida(rand.nextInt(5) + 1);
-            soldado.setFila(fila);
-            soldado.setColumna((char)('A' + columna));
-            soldado.setEstado(true);
-            campo.get(fila).set(columna, soldado);
-            i++;
-        }
-
+        crearSoldados(ej1, '@');
+        crearSoldados(ej2, '?');
+        asignarSoldados(campo, ej1);
+        asignarSoldados(campo, ej2);
         mostrarTabla(campo);
-        mostrarMayorVida(campo);
-        promedioVida(campo);
-        System.out.println("\nDatos de los soldados en orden de creación:");
-        mostrar(campo);
-        aleatorio(campo);
-        System.out.println("\nAleatorio");
-        mostrar(campo);
-        System.out.println("\nRanking de mayor a menor BURBUJA");
-        rankingMayorMenorBurbuja(campo);
-        mostrar(campo);
-        aleatorio(campo);
-        System.out.println("\nAleatorio");
-        mostrar(campo);
-        System.out.println("\nRanking de mayor a menor SELECCION ");
-        rankingMayorMenorSeleccion(campo);
-        mostrar(campo);
-        determinarGanador(campo);
     }
     public static void crearSoldados(Soldado[] ej, char a){
         Random rand = new Random();
@@ -67,35 +18,49 @@ public class VideoJuego4 {
             ej[i] = new Soldado();
             ej[i].setVida(rand.nextInt(5) + 1);
             if(i == 10)
-                ej[i].setNombre("" + i + a + ej[i].getVida());
+                ej[i].setNombre("" + ej[i].getVida() + a);
             else
-                ej[i].setNombre("0"+ i + a + ej[i].getVida());
+                ej[i].setNombre("" + ej[i].getVida() + a);
+        }
+    }
+    public static void asignarSoldados(Soldado[][] campo, Soldado[] ej){
+        Random rand = new Random();
+        int fila, columna;
+        for (int i = 0; i < ej.length; i++){
+            boolean aux = true;
+            while(aux){
+                fila = rand.nextInt(10);
+                columna = rand.nextInt(10);
+                if(campo[fila][columna] == null){
+                    campo[fila][columna] = ej[i];
+                    ej[i].setFila(fila);
+                    ej[i].setColumna(columna);
+                    aux = false;
+                }
+            }
         }
     }
 
 
-    public static void mostrarTabla(ArrayList<ArrayList<Soldado>> campo){
+    public static void mostrarTabla(Soldado[][] campo){
         for(char i = 'A'; i < 'K'; i++){
-            System.out.print("          S " + i + "  ");
+            System.out.print("   " + i + "  ");
         }
-        
         System.out.println();
-        for(int i = 0; i < 10; i++){
-            if(i == 9){
+        for(int i = 0; i < campo.length; i++){
+            if(i == 9)
                 System.out.print(i + 1);
-            }
             else
-            System.out.print((i + 1) + " ");
+                System.out.print((i + 1) + " ");
 
-            for(int j = 0; j < 10; j++){
-                if (campo.get(i).get(j) != null && campo.get(i).get(j).getEstado())
-                    System.out.print("|" + campo.get(i).get(j).getNombre());
+            for(int j = 0; j < campo[i].length; j++){
+                if (campo[i][j] != null)
+                    System.out.print(" |" + campo[i][j].getNombre());
                 else
-                    System.out.print("|           ");
+                    System.out.print(" |  ");
             }
-            System.out.println("|");
-            System.out.println("   ---------------------------------------------"+
-            "---------------------------------------------------------------------------");
+            System.out.println(" |");
+            System.out.println("   -----------------------------------------");
         }
     }
 
