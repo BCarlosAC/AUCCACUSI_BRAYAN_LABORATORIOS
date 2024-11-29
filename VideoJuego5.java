@@ -18,17 +18,19 @@ public class VideoJuego5 {
 
             System.out.println("Mayor vida ejercito 1: \n\t" + e1.get(mayorVida(e1)));
             System.out.println("Mayor vida ejercito 2: \n\t" + e2.get(mayorVida(e2)));
-            
-            System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
-            System.out.println("Promedio vida ejercito 2: " + promedioEjercito(ej1));
+
+            System.out.println("\nPromedio vida ejercito 1: " + promedioVida(e1));
+            System.out.println("Promedio vida ejercito 2: " + promedioVida(e2));
+
             System.out.println("\nDatos en orden que fueron creados");
-            mostrar(ej1, 1);
-            mostrar(ej2, 2);
+            mostrarEnOrdenCreacion(e1);
+            mostrarEnOrdenCreacion(e2);
+
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
-            rankingMayorMenorBurbuja(ej1);
+            rankingMayorMenorBurbuja(e1);
             mostrar(ej1, 1);
-            rankingMayorMenorBurbuja(ej2);
+            rankingMayorMenorBurbuja(e2);
             mostrar(ej2, 2);
     
             System.out.println("\nAleatorio");
@@ -112,46 +114,58 @@ public class VideoJuego5 {
         return indexMayor;
     }
 
-    public static double promedioEjercito(Soldado[] ej){
-        double sumLife = 0;
-        for(int i = 0; i < ej.length; i++){
-            sumLife += ej[i].getVida();
+    public static double promedioVida(HashMap<Integer, Soldado> ejercito){
+        double sumaVida = 0;
+        for(int i = 0; i < ejercito.size(); i++){
+            sumaVida += ejercito.get(i).getVida();
         }
-        return sumLife/ej.length;
+        return (double)sumaVida/ejercito.size();
     }
 
     //Muestra el orden de creacion de los soldados, esto porque al asignar soldados al array
     //lo hicimos de manera ordenada, ademas puede reutilizarse en otros metodos.
-    public static void mostrar(Soldado[] ej, int a){
-        System.out.println("Ejercito " + a);
-        for(Soldado sold : ej){
-            System.out.println(sold);
+    public static void mostrarEnOrdenCreacion(HashMap<Integer, Soldado> ejercito){
+        for(int key : ejercito.keySet()){
+            System.out.println(ejercito.get(key));
+        }
+    }
+
+    public static void mostrar(HashMap<Integer, Soldado> ejercito){
+        for(int key : ejercito.keySet()){
+            System.out.println(ejercito.get(key));
         }
     }
     
-    public static void aleatorio(Soldado[] ej){
+    public static void aleatorio(HashMap<Integer, Soldado> ejercito){
         Random rand = new Random();
         Soldado aux;
         int r1, r2;
-        for(int i = 0; i < ej.length; i++){
-            r1 = rand.nextInt(ej.length);
-            r2 = rand.nextInt(ej.length);
+        for(int i = 0; i < ejercito.size(); i++){
+            r1 = rand.nextInt(ejercito.size());
+            r2 = rand.nextInt(ejercito.size());
             aux = ej[r1];
             ej[r1] = ej[r2];
             ej[r2] = aux;
         }
     }
     
-    public static void rankingMayorMenorBurbuja(Soldado[] ej){
-        for (int i = 0; i < ej.length - 1; i++){
-            for(int j = 0; j < ej.length - i - 1; j++){
-                if(ej[j].getVida() < ej[j + 1].getVida()){
-                    Soldado aux = ej[j];
-                    ej[j] = ej[j + 1];
-                    ej[j + 1] = aux;
+    public static ArrayList<Soldado> rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito){
+        ArrayList<Soldado> auxEjercito = new ArrayList<>();
+        //añadimos los soldados del HashMap a un ArrayList
+        for(int key : ejercito.keySet()){
+            auxEjercito.add(ejercito.get(key));
+        }
+        for (int i = 0; i < ejercito.size() - 1; i++){
+            for(int j = 0; j < ejercito.size() - i - 1; j++){
+                //Comparar elementos del arraylist e intercambiar posicion si se cumple la condicion
+                if( auxEjercito.get(i).getVida() < auxEjercito.get(j + 1).getVida()){
+                    Soldado aux = auxEjercito.get(j);
+                    auxEjercito.set(j, auxEjercito.get(j + 1));
+                    auxEjercito.set(j + 1, aux);
                 }   
             }
         }
+        return auxEjercito;
     }
     
     public static void rankingMayorMenorSeleccion(Soldado[] ej){
