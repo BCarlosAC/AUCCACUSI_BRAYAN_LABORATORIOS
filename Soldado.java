@@ -5,9 +5,7 @@ public class Soldado {
     private int vida;
     private int fila;
     private int columna;
-    private boolean estado = false;
 
-    //Metodos mutadores
     public void setNombre( String n){
         nombre = n;
     }
@@ -20,12 +18,7 @@ public class Soldado {
     public void setVida(int v){
         vida = v;
     }
-    public void setEstado(boolean e){
-        estado = e;
-    }
-    
-    
-    // Metodos accesores
+
     public String getNombre(){
         return nombre;
     }
@@ -38,10 +31,7 @@ public class Soldado {
     public int getVida(){
         return vida;
     }
-    public boolean getEstado(){
-        return estado;
-    }
-
+   
     public String toString(){
         return "Nombre: " + getNombre() + "    Vida: " + getVida() + 
             "    Fila " + (getFila() + 1) + "    Columna: " + getColumna();
