@@ -19,8 +19,8 @@ public class VideoJuego5 {
             System.out.println("Mayor vida ejercito 1: \n\t" + e1.get(mayorVida(e1)));
             System.out.println("Mayor vida ejercito 2: \n\t" + e2.get(mayorVida(e2)));
 
-            System.out.println("\nPromedio vida ejercito 1: " + promedioVida(e1));
-            System.out.println("Promedio vida ejercito 2: " + promedioVida(e2));
+            System.out.println("\nPromedio vida ejercito 1: " + (double)sumaVida(e1)/e1.size());
+            System.out.println("Promedio vida ejercito 2: " + (double)sumaVida(e2)/e2.size());
 
             System.out.println("\nDatos en orden que fueron creados");
             mostrarEnOrdenCreacion(e1);
@@ -30,24 +30,24 @@ public class VideoJuego5 {
             System.out.println("BURBUJA");
             rankingMayorMenorBurbuja(e1);
             mostrarSoldadosEjercito(e1, "Ejercito 1: ");
-            
+
             rankingMayorMenorSeleccion(e2);
             mostrarSoldadosEjercito(e2, "Ejercito 2: ");
 
             System.out.println("\nAleatorio");
-            aleatorio(ej1);
-            aleatorio(ej2);
-            mostrar(ej1, 1);
-            mostrar(ej2, 2);
+            aleatorio(e1);
+            aleatorio(e2);
+            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
+            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
     
             System.out.println("\nSELECCION");
-            rankingMayorMenorSeleccion(ej1);
-            mostrar(ej1, 1);
-            rankingMayorMenorSeleccion(ej2);
-            mostrar(ej2, 2);
+            rankingMayorMenorSeleccion(e1);
+            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
+            rankingMayorMenorSeleccion(e2);
+            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
     
             System.out.println();
-            determinarGanador(ej1, ej2);
+            determinarGanador(e1, e2);
 
             System.out.print("Desea iniciar un nuevo juego? (y/n): ");
             decicion = sc.nextLine().charAt(0);
@@ -138,13 +138,7 @@ public class VideoJuego5 {
         return indexMayor;
     }
 
-    public static double promedioVida(HashMap<Integer, Soldado> ejercito){
-        double sumaVida = 0;
-        for(int i = 0; i < ejercito.size(); i++){
-            sumaVida += ejercito.get(i).getVida();
-        }
-        return (double)sumaVida/ejercito.size();
-    }
+    
 
     
     public static void aleatorio(HashMap<Integer, Soldado> ejercito){
@@ -154,9 +148,9 @@ public class VideoJuego5 {
         for(int i = 0; i < ejercito.size(); i++){
             r1 = rand.nextInt(ejercito.size());
             r2 = rand.nextInt(ejercito.size());
-            aux = ej[r1];
-            ej[r1] = ej[r2];
-            ej[r2] = aux;
+            aux = ejercito.get(r1);
+            ejercito.put(r1, ejercito.get(r2));
+            ejercito.put(r2, aux);
         }
     }
     
@@ -198,26 +192,30 @@ public class VideoJuego5 {
         }
     }
     
+    public static int sumaVida(HashMap<Integer, Soldado> ejercito){
+        int sumaVida = 0;
+        for(int i = 0; i < ejercito.size(); i++){
+            sumaVida += ejercito.get(i).getVida();
+        }
+        return sumaVida;
+    }
     
-    public static void determinarGanador(Soldado[] ej1, Soldado[] ej2){
-        double sumLifeEj1 = 0, sumLifeEj2 = 0;
-        for(int i = 0; i < ej1.length; i++){
-            sumLifeEj1 += ej1[i].getVida();
+    public static void determinarGanador(HashMap<Integer, Soldado> ejercito1, HashMap<Integer, Soldado> ejercito2){
+        int vidaTotalEjer1, vidaTotalEjer2;
+        vidaTotalEjer1 = sumaVida(ejercito1);
+        vidaTotalEjer2 = sumaVida(ejercito2);
+
+        if (vidaTotalEjer1 == vidaTotalEjer2) {
+            System.out.println("EMPATE\nEjercito1 = " + vidaTotalEjer1 + 
+            " ---- Ejercito2 = " + vidaTotalEjer2);
         }
-        for(int i = 0; i < ej2.length; i++){
-            sumLifeEj2 += ej2[i].getVida();
-        }
-        if (sumLifeEj1 == sumLifeEj2) {
-            System.out.println("EMPATE\nEjercito1 = " + sumLifeEj1 + 
-            " ---- Ejercito2 = " + sumLifeEj2);
-        }
-        else if (sumLifeEj1 > sumLifeEj2) {
-            System.out.println("GANA EJERCITO1\nEjercito1 = " + sumLifeEj1 + 
-            "   >  Ejercito2 = " + sumLifeEj2);
+        else if (vidaTotalEjer1 > vidaTotalEjer2) {
+            System.out.println("GANA EJERCITO1\nEjercito1 = " + vidaTotalEjer1 + 
+            "   >  Ejercito2 = " + vidaTotalEjer2);
         }
         else{
-            System.out.println("GANA EJERCITO2\nEjercito1 = " + sumLifeEj1 + 
-            "   <  Ejercito2 = " + sumLifeEj2);
+            System.out.println("GANA EJERCITO2\nEjercito1 = " + vidaTotalEjer1 + 
+            "   <  Ejercito2 = " + vidaTotalEjer2);
         }   
     }
 }
