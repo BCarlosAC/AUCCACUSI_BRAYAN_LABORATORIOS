@@ -7,16 +7,15 @@ public class VideoJuego5 {
             Scanner sc = new Scanner(System.in);
             Random rand = new Random();
             Soldado[][] campo = new Soldado[10][10];
-            Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
-            Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
             HashMap<Integer, Soldado> e1 = new HashMap<>();
             HashMap<Integer, Soldado> e2 = new HashMap<>();
             
             crearSoldados(e1, '@');
             crearSoldados(e2, '?');
-            asignarSoldados(campo, ej1);
-            asignarSoldados(campo, ej2);
+            asignarSoldados(campo, e1);
+            asignarSoldados(campo, e2);
             mostrarTabla(campo);
+            
             System.out.println("Mayor vida ejercito 1: \n\t" + ej1[mayorVida(ej1)]);
             System.out.println("Mayor vida ejercito 2: \n\t" + ej2[mayorVida(ej2)]);
             System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
@@ -54,30 +53,29 @@ public class VideoJuego5 {
     
     public static void crearSoldados(HashMap<Integer, Soldado> ejercito, char a){
         Random random = new Random();
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < random.nextInt(10); i++){
             Soldado aux = new Soldado();
             aux.setVida(random.nextInt(5) + 1);
             aux.setNombre(i + "." + a + aux.getVida());
             ejercito.put(i + 1, aux);
         }
     }
-    public static void asignarSoldados(Soldado[][] campo, Soldado[] ej){
+    public static void asignarSoldados(Soldado[][] campo, HashMap<Integer, Soldado> ejercito){
         Random rand = new Random();
         int fila, columna;
-        for (int i = 0; i < ej.length; i++){
+        for (int i = 0; i < ejercito.size(); i++){
             boolean aux = true;
             while(aux){
                 fila = rand.nextInt(10);
                 columna = rand.nextInt(10);
                 if(campo[fila][columna] == null){
-                    campo[fila][columna] = ej[i];
-                    ej[i].setFila(fila);
-                    ej[i].setColumna(columna);
+                    campo[fila][columna] = ejercito.get(i + 1);
+                    ejercito.get(i + 1).setFila(fila);
+                    ejercito.get(i + 1).setColumna(columna);
                     aux = false;
                 }
             }
         }
-    
     }
     public static void mostrarTabla(Soldado[][] campo){
         System.out.print("  ");
