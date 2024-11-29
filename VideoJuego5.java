@@ -23,16 +23,15 @@ public class VideoJuego5 {
             System.out.println("Promedio vida ejercito 2: " + (double)sumaVida(e2)/e2.size());
 
             System.out.println("\nDatos en orden que fueron creados");
+            System.out.println("Ejercito 1: ");
             mostrarEnOrdenCreacion(e1);
+            System.out.println("Ejercito 2: ");
             mostrarEnOrdenCreacion(e2);
 
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
-            rankingMayorMenorBurbuja(e1);
-            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
-
-            rankingMayorMenorSeleccion(e2);
-            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
+            rankingMayorMenorBurbuja(e1,"Ejercito1");
+            rankingMayorMenorSeleccion(e2,"Ejercito2");
 
             System.out.println("\nAleatorio");
             aleatorio(e1);
@@ -41,10 +40,8 @@ public class VideoJuego5 {
             mostrarSoldadosEjercito(e2, "Ejercito 2: ");
     
             System.out.println("\nSELECCION");
-            rankingMayorMenorSeleccion(e1);
-            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
-            rankingMayorMenorSeleccion(e2);
-            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
+            rankingMayorMenorSeleccion(e1, "Ejercito1");
+            rankingMayorMenorSeleccion(e2, "Ejercito2");
     
             System.out.println();
             determinarGanador(e1, e2);
@@ -57,7 +54,7 @@ public class VideoJuego5 {
     
     public static void crearSoldados(HashMap<Integer, Soldado> ejercito, char a){
         Random random = new Random();
-        for(int i = 0; i < random.nextInt(10); i++){
+        for(int i = 0; i < random.nextInt(10) + 1; i++){
             Soldado aux = new Soldado();
             aux.setVida(random.nextInt(5) + 1);
             aux.setNombre(i + "." + a + aux.getVida());
@@ -70,7 +67,7 @@ public class VideoJuego5 {
         for(int i = 0; i < ejercito.size(); i++){
             for(int j = 0; j < ejercito.size(); j++){
             //comparamos el primer caracter de cada soldado, este nos dice su orden de creacion.
-                if(ejercito.get(j).getNombre().charAt(0) == i){
+                if(ejercito.get(j).getNombre().charAt(0) == i + '0'){
                     System.out.println(ejercito.get(j));
                 }
             }
@@ -155,7 +152,8 @@ public class VideoJuego5 {
     }
     
 
-    public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito) {
+    public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito, String ejercitoNombre) {
+        System.out.println(ejercitoNombre);
         // Bucle para ordenar y mostrar el ranking
         for (int i = 0; i < ejercito.size(); i++) {
             for (int j = i + 1; j < ejercito.size(); j++) {
@@ -172,7 +170,8 @@ public class VideoJuego5 {
     }
     
     
-    public static void rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito) {
+    public static void rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito, String ejercitoNombre){
+        System.out.println(ejercitoNombre);
         for (int i = 0; i < ejercito.size() - 1; i++) {
             int indexMayor = i;
             for (int j = i + 1; j < ejercito.size(); j++) {
@@ -210,11 +209,11 @@ public class VideoJuego5 {
             " ---- Ejercito2 = " + vidaTotalEjer2);
         }
         else if (vidaTotalEjer1 > vidaTotalEjer2) {
-            System.out.println("GANA EJERCITO1\nEjercito1 = " + vidaTotalEjer1 + 
+            System.out.println("GANA EJERCITO 1\nEjercito1 = " + vidaTotalEjer1 + 
             "   >  Ejercito2 = " + vidaTotalEjer2);
         }
         else{
-            System.out.println("GANA EJERCITO2\nEjercito1 = " + vidaTotalEjer1 + 
+            System.out.println("GANA EJERCITO 2\nEjercito1 = " + vidaTotalEjer1 + 
             "   <  Ejercito2 = " + vidaTotalEjer2);
         }   
     }
