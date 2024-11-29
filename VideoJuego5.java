@@ -2,10 +2,9 @@ package L8;
 import java.util.*;
 public class VideoJuego5 {
     public static void main(String [] args){
-        char decicion = 'y';
-        while(decicion == 'y'){
+        char decision = 'y';
+        while(decision == 'y'){
             Scanner sc = new Scanner(System.in);
-            Random rand = new Random();
             Soldado[][] campo = new Soldado[10][10];
             HashMap<Integer, Soldado> e1 = new HashMap<>();
             HashMap<Integer, Soldado> e2 = new HashMap<>();
@@ -14,6 +13,10 @@ public class VideoJuego5 {
             crearSoldados(e2, '?');
             asignarSoldados(campo, e1);
             asignarSoldados(campo, e2);
+
+            System.out.println("Leyenda nombre\n-----------------------------\n" +
+            "1erNumero = Orden de creacion\n "+
+            "@ = ejercito1\n? = ejercito2\nUltimo Numero = Nivel de vida\n");
             mostrarTabla(campo);
 
             System.out.println("Mayor vida ejercito 1: \n\t" + e1.get(mayorVida(e1)));
@@ -30,8 +33,11 @@ public class VideoJuego5 {
 
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
-            rankingMayorMenorBurbuja(e1,"Ejercito1");
-            rankingMayorMenorSeleccion(e2,"Ejercito2");
+            rankingMayorMenorBurbuja(e1);
+            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
+            rankingMayorMenorSeleccion(e2);
+            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
+
 
             System.out.println("\nAleatorio");
             aleatorio(e1);
@@ -40,20 +46,26 @@ public class VideoJuego5 {
             mostrarSoldadosEjercito(e2, "Ejercito 2: ");
     
             System.out.println("\nSELECCION");
-            rankingMayorMenorSeleccion(e1, "Ejercito1");
-            rankingMayorMenorSeleccion(e2, "Ejercito2");
+            rankingMayorMenorSeleccion(e1);
+            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
+            rankingMayorMenorSeleccion(e2);
+            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
     
             System.out.println();
             determinarGanador(e1, e2);
 
             System.out.print("Desea iniciar un nuevo juego? (y/n): ");
-            decicion = sc.nextLine().charAt(0);
+            decision = sc.nextLine().charAt(0);
         }
         
     }
     
     public static void crearSoldados(HashMap<Integer, Soldado> ejercito, char a){
         Random random = new Random();
+        /*Asignamos soldados al HashMap
+        * la cantidad de soldados es determinado aleatoriamente
+        * Damos nombre a cada soldado creado, considerando el ejercito a donde perteneces @ o ?
+        */
         for(int i = 0; i < random.nextInt(10) + 1; i++){
             Soldado aux = new Soldado();
             aux.setVida(random.nextInt(5) + 1);
@@ -74,7 +86,7 @@ public class VideoJuego5 {
         }
     }
 
-    /*mostrarSoldadosEjercito mustra lo valores del HashMap sin inportar si se hicieron 
+    /*mostrarSoldadosEjercito muestra los valores del HashMap sin inportar si se hicieron 
     cambios en los "valores" del Hashmap */
     public static void mostrarSoldadosEjercito(HashMap<Integer, Soldado> ejercito, String ejercitoNombre){
         System.out.println(ejercitoNombre);
@@ -92,6 +104,7 @@ public class VideoJuego5 {
             while(aux){
                 fila = rand.nextInt(10);
                 columna = rand.nextInt(10);
+                /*Si campo esta vacio le asignamos un elemento del HashMapt(correspondiente a un ejercito determinado) */
                 if(campo[fila][columna] == null){
                     campo[fila][columna] = ejercito.get(i);
                     ejercito.get(i).setFila(fila);
@@ -139,6 +152,9 @@ public class VideoJuego5 {
 
     
     public static void aleatorio(HashMap<Integer, Soldado> ejercito){
+        /*Generamos 2 numeros aleatorios que actuaran como indices, luego intercambiamos los 
+         * "valores" de cada entrada del HashMap con estos indices.
+         */
         Random rand = new Random();
         Soldado aux;
         int r1, r2;
@@ -152,10 +168,10 @@ public class VideoJuego5 {
     }
     
 
-    public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito, String ejercitoNombre) {
-        System.out.println(ejercitoNombre);
-        // Bucle para ordenar y mostrar el ranking
+    public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito) {
         for (int i = 0; i < ejercito.size(); i++) {
+            /* Cogemos el primer elemento y los comparamos con los demas, para las siguientes pasadas
+            ya no consideramos el primero puesto que ya es el mayor */
             for (int j = i + 1; j < ejercito.size(); j++) {
                 if (ejercito.get(j).getVida() > ejercito.get(i).getVida()) {
                     // Intercambiar posiciones para burbuja
@@ -164,14 +180,11 @@ public class VideoJuego5 {
                     ejercito.put(j, temp);
                 }
             }
-            // Imprimir el soldado actual después de ordenar
-            System.out.println(ejercito.get(i));
         }
     }
     
     
-    public static void rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito, String ejercitoNombre){
-        System.out.println(ejercitoNombre);
+    public static void rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito){
         for (int i = 0; i < ejercito.size() - 1; i++) {
             int indexMayor = i;
             for (int j = i + 1; j < ejercito.size(); j++) {
@@ -184,11 +197,6 @@ public class VideoJuego5 {
             ejercito.put(i, ejercito.get(indexMayor));
             ejercito.put(indexMayor, temp);
         }
-    
-        // Imprimir los soldados después de ordenar
-        for (int i = 0; i < ejercito.size(); i++) {
-            System.out.println(ejercito.get(i));
-        }
     }
     
     public static int sumaVida(HashMap<Integer, Soldado> ejercito){
@@ -200,6 +208,7 @@ public class VideoJuego5 {
     }
     
     public static void determinarGanador(HashMap<Integer, Soldado> ejercito1, HashMap<Integer, Soldado> ejercito2){
+        /*El ganador se determina deacuerdo a la suma total de las vidas de los soldados de cada ejercito */
         int vidaTotalEjer1, vidaTotalEjer2;
         vidaTotalEjer1 = sumaVida(ejercito1);
         vidaTotalEjer2 = sumaVida(ejercito2);
