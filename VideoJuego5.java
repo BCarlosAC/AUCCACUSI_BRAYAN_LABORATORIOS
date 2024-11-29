@@ -15,9 +15,10 @@ public class VideoJuego5 {
             asignarSoldados(campo, e1);
             asignarSoldados(campo, e2);
             mostrarTabla(campo);
+
+            System.out.println("Mayor vida ejercito 1: \n\t" + e1.get(mayorVida(e1)));
+            System.out.println("Mayor vida ejercito 2: \n\t" + e2.get(mayorVida(e2)));
             
-            System.out.println("Mayor vida ejercito 1: \n\t" + ej1[mayorVida(ej1)]);
-            System.out.println("Mayor vida ejercito 2: \n\t" + ej2[mayorVida(ej2)]);
             System.out.println("\nPromedio vida ejercito 1: " + promedioEjercito(ej1));
             System.out.println("Promedio vida ejercito 2: " + promedioEjercito(ej1));
             System.out.println("\nDatos en orden que fueron creados");
@@ -57,7 +58,7 @@ public class VideoJuego5 {
             Soldado aux = new Soldado();
             aux.setVida(random.nextInt(5) + 1);
             aux.setNombre(i + "." + a + aux.getVida());
-            ejercito.put(i + 1, aux);
+            ejercito.put(i, aux);
         }
     }
     public static void asignarSoldados(Soldado[][] campo, HashMap<Integer, Soldado> ejercito){
@@ -69,14 +70,15 @@ public class VideoJuego5 {
                 fila = rand.nextInt(10);
                 columna = rand.nextInt(10);
                 if(campo[fila][columna] == null){
-                    campo[fila][columna] = ejercito.get(i + 1);
-                    ejercito.get(i + 1).setFila(fila);
-                    ejercito.get(i + 1).setColumna(columna);
+                    campo[fila][columna] = ejercito.get(i);
+                    ejercito.get(i).setFila(fila);
+                    ejercito.get(i).setColumna(columna);
                     aux = false;
                 }
             }
         }
     }
+
     public static void mostrarTabla(Soldado[][] campo){
         System.out.print("  ");
         for(char i = 'A'; i < 'K'; i++){
@@ -99,10 +101,11 @@ public class VideoJuego5 {
             System.out.println("  ----------------------------------------------------");
         }
     }
-    public static int mayorVida(Soldado[] ej){
+
+    public static int mayorVida(HashMap<Integer, Soldado> ejercito){
         int indexMayor = 0;
-        for(int i = 0; i < ej.length - 1; i++){
-            if(ej[indexMayor].getVida() < ej[i].getVida()){
+        for(int i = 0; i < ejercito.size(); i++){
+            if(ejercito.get(i).getVida() > ejercito.get(indexMayor).getVida()){
                 indexMayor = i;
             }
         }
