@@ -9,8 +9,11 @@ public class VideoJuego5 {
             Soldado[][] campo = new Soldado[10][10];
             Soldado[] ej1 = new Soldado[rand.nextInt(10) + 1];
             Soldado[] ej2 = new Soldado[rand.nextInt(10) + 1];
-            crearSoldados(ej1, '@');
-            crearSoldados(ej2, '?');
+            HashMap<Integer, Soldado> e1 = new HashMap<>();
+            HashMap<Integer, Soldado> e2 = new HashMap<>();
+            
+            crearSoldados(e1, '@');
+            crearSoldados(e2, '?');
             asignarSoldados(campo, ej1);
             asignarSoldados(campo, ej2);
             mostrarTabla(campo);
@@ -49,12 +52,13 @@ public class VideoJuego5 {
         
     }
     
-    public static void crearSoldados(Soldado[] ej, char a){
-        Random rand = new Random();
-        for(int i = 0; i < ej.length; i++){
-            ej[i] = new Soldado();
-            ej[i].setVida(rand.nextInt(5) + 1);
-                ej[i].setNombre(i + "." + a + ej[i].getVida());
+    public static void crearSoldados(HashMap<Integer, Soldado> ejercito, char a){
+        Random random = new Random();
+        for(int i = 0; i < 10; i++){
+            Soldado aux = new Soldado();
+            aux.setVida(random.nextInt(5) + 1);
+            aux.setNombre(i + "." + a + aux.getVida());
+            ejercito.put(i + 1, aux);
         }
     }
     public static void asignarSoldados(Soldado[][] campo, Soldado[] ej){
