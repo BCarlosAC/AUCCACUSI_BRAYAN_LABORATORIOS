@@ -28,11 +28,11 @@ public class VideoJuego5 {
 
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
-            rankingMayorMenorBurbuja(e1);
-            mostrar(ej1, 1);
-            rankingMayorMenorBurbuja(e2);
-            mostrar(ej2, 2);
-    
+            ArrayList<Soldado> ejercito1 = rankingMayorMenorBurbuja(e1);
+            mostrarArrayList(ejercito1);
+            ArrayList<Soldado> ejercito2 = rankingMayorMenorSeleccion(e2);
+            mostrarArrayList(ejercito2);
+
             System.out.println("\nAleatorio");
             aleatorio(ej1);
             aleatorio(ej2);
@@ -130,9 +130,9 @@ public class VideoJuego5 {
         }
     }
 
-    public static void mostrar(HashMap<Integer, Soldado> ejercito){
-        for(int key : ejercito.keySet()){
-            System.out.println(ejercito.get(key));
+    public static void mostrarArrayList(ArrayList<Soldado> ejercito){
+        for(Soldado sold : ejercito){
+            System.out.println(ejercito);
         }
     }
     
@@ -148,6 +148,7 @@ public class VideoJuego5 {
             ej[r2] = aux;
         }
     }
+    
     
     public static ArrayList<Soldado> rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito){
         ArrayList<Soldado> auxEjercito = new ArrayList<>();
@@ -167,19 +168,30 @@ public class VideoJuego5 {
         }
         return auxEjercito;
     }
-    
-    public static void rankingMayorMenorSeleccion(Soldado[] ej){
-        for (int i = 0; i < ej.length - 1; i++){
-            int indexMayor = i;
-            for (int j = i + 1; j < ej.length; j++){
-                if(ej[j].getVida() > ej[indexMayor].getVida())
-                indexMayor = j;
-            }
-            Soldado aux = ej[i];
-            ej[i] = ej[indexMayor];
-            ej[indexMayor] = aux;
+
+
+
+    public static ArrayList<Soldado> rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito) {
+        ArrayList<Soldado> auxEjercito = new ArrayList<>();
+        // Añadimos los soldados del HashMap al ArrayList
+        for (int key : ejercito.keySet()){
+            auxEjercito.add(ejercito.get(key));
         }
+        for (int i = 0; i < auxEjercito.size() - 1; i++){
+            int indexMayor = i;
+            for (int j = i + 1; j < auxEjercito.size(); j++){
+                if (auxEjercito.get(j).getVida() > auxEjercito.get(indexMayor).getVida()){
+                    indexMayor = j;
+                }
+            }
+            // Intercambiamos las posiciones en el ArrayList
+            Soldado aux = auxEjercito.get(i);
+            auxEjercito.set(i, auxEjercito.get(indexMayor));
+            auxEjercito.set(indexMayor, aux);
+        }
+        return auxEjercito;
     }
+    
     
     public static void determinarGanador(Soldado[] ej1, Soldado[] ej2){
         double sumLifeEj1 = 0, sumLifeEj2 = 0;
