@@ -29,7 +29,10 @@ public class VideoJuego5 {
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
             rankingMayorMenorBurbuja(e1);
+            mostrarSoldadosEjercito(e1, "Ejercito 1: ");
+            
             rankingMayorMenorSeleccion(e2);
+            mostrarSoldadosEjercito(e2, "Ejercito 2: ");
 
             System.out.println("\nAleatorio");
             aleatorio(ej1);
@@ -76,7 +79,8 @@ public class VideoJuego5 {
 
     /*mostrarSoldadosEjercito mustra lo valores del HashMap sin inportar si se hicieron 
     cambios en los "valores" del Hashmap */
-    public static void mostrarSoldadosEjercito(HashMap<Integer, Soldado> ejercito){
+    public static void mostrarSoldadosEjercito(HashMap<Integer, Soldado> ejercito, String ejercitoNombre){
+        System.out.println(ejercitoNombre);
         for(int key : ejercito.keySet()){
             System.out.println(ejercito.get(key));
         }
