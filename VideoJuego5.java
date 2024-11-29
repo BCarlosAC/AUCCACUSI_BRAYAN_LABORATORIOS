@@ -28,10 +28,8 @@ public class VideoJuego5 {
 
             System.out.println("\nRanking de poder mayor a menor vida");
             System.out.println("BURBUJA");
-            ArrayList<Soldado> ejercito1 = rankingMayorMenorBurbuja(e1);
-            mostrarArrayList(ejercito1);
-            ArrayList<Soldado> ejercito2 = rankingMayorMenorSeleccion(e2);
-            mostrarArrayList(ejercito2);
+            rankingMayorMenorBurbuja(e1);
+            rankingMayorMenorSeleccion(e2);
 
             System.out.println("\nAleatorio");
             aleatorio(ej1);
@@ -129,12 +127,6 @@ public class VideoJuego5 {
             System.out.println(ejercito.get(key));
         }
     }
-
-    public static void mostrarArrayList(ArrayList<Soldado> ejercito){
-        for(Soldado sold : ejercito){
-            System.out.println(ejercito);
-        }
-    }
     
     public static void aleatorio(HashMap<Integer, Soldado> ejercito){
         Random rand = new Random();
@@ -149,47 +141,44 @@ public class VideoJuego5 {
         }
     }
     
+
     
-    public static ArrayList<Soldado> rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito){
-        ArrayList<Soldado> auxEjercito = new ArrayList<>();
-        //añadimos los soldados del HashMap a un ArrayList
-        for(int key : ejercito.keySet()){
-            auxEjercito.add(ejercito.get(key));
-        }
-        for (int i = 0; i < ejercito.size() - 1; i++){
-            for(int j = 0; j < ejercito.size() - i - 1; j++){
-                //Comparar elementos del arraylist e intercambiar posicion si se cumple la condicion
-                if( auxEjercito.get(i).getVida() < auxEjercito.get(j + 1).getVida()){
-                    Soldado aux = auxEjercito.get(j);
-                    auxEjercito.set(j, auxEjercito.get(j + 1));
-                    auxEjercito.set(j + 1, aux);
-                }   
+
+    public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito) {
+        // Bucle para ordenar y mostrar el ranking
+        for (int i = 0; i < ejercito.size(); i++) {
+            for (int j = i + 1; j < ejercito.size(); j++) {
+                if (ejercito.get(j).getVida() > ejercito.get(i).getVida()) {
+                    // Intercambiar posiciones para burbuja
+                    Soldado temp = ejercito.get(i);
+                    ejercito.put(i, ejercito.get(j));
+                    ejercito.put(j, temp);
+                }
             }
+            // Imprimir el soldado actual después de ordenar
+            System.out.println(ejercito.get(i));
         }
-        return auxEjercito;
     }
-
-
-
-    public static ArrayList<Soldado> rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito) {
-        ArrayList<Soldado> auxEjercito = new ArrayList<>();
-        // Añadimos los soldados del HashMap al ArrayList
-        for (int key : ejercito.keySet()){
-            auxEjercito.add(ejercito.get(key));
-        }
-        for (int i = 0; i < auxEjercito.size() - 1; i++){
+    
+    
+    public static void rankingMayorMenorSeleccion(HashMap<Integer, Soldado> ejercito) {
+        for (int i = 0; i < ejercito.size() - 1; i++) {
             int indexMayor = i;
-            for (int j = i + 1; j < auxEjercito.size(); j++){
-                if (auxEjercito.get(j).getVida() > auxEjercito.get(indexMayor).getVida()){
+            for (int j = i + 1; j < ejercito.size(); j++) {
+                if (ejercito.get(j).getVida() > ejercito.get(indexMayor).getVida()) {
                     indexMayor = j;
                 }
             }
-            // Intercambiamos las posiciones en el ArrayList
-            Soldado aux = auxEjercito.get(i);
-            auxEjercito.set(i, auxEjercito.get(indexMayor));
-            auxEjercito.set(indexMayor, aux);
+            // Intercambiar los soldados
+            Soldado temp = ejercito.get(i);
+            ejercito.put(i, ejercito.get(indexMayor));
+            ejercito.put(indexMayor, temp);
         }
-        return auxEjercito;
+    
+        // Imprimir los soldados después de ordenar
+        for (int i = 0; i < ejercito.size(); i++) {
+            System.out.println(ejercito.get(i));
+        }
     }
     
     
