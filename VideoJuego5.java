@@ -61,6 +61,28 @@ public class VideoJuego5 {
             ejercito.put(i, aux);
         }
     }
+
+    
+    public static void mostrarEnOrdenCreacion(HashMap<Integer, Soldado> ejercito){
+        for(int i = 0; i < ejercito.size(); i++){
+            for(int j = 0; j < ejercito.size(); j++){
+            //comparamos el primer caracter de cada soldado, este nos dice su orden de creacion.
+                if(ejercito.get(j).getNombre().charAt(0) == i){
+                    System.out.println(ejercito.get(j));
+                }
+            }
+        }
+    }
+
+    /*mostrarSoldadosEjercito mustra lo valores del HashMap sin inportar si se hicieron 
+    cambios en los "valores" del Hashmap */
+    public static void mostrarSoldadosEjercito(HashMap<Integer, Soldado> ejercito){
+        for(int key : ejercito.keySet()){
+            System.out.println(ejercito.get(key));
+        }
+    }
+    
+    
     public static void asignarSoldados(Soldado[][] campo, HashMap<Integer, Soldado> ejercito){
         Random rand = new Random();
         int fila, columna;
@@ -120,13 +142,6 @@ public class VideoJuego5 {
         return (double)sumaVida/ejercito.size();
     }
 
-    //Muestra el orden de creacion de los soldados, esto porque al asignar soldados al array
-    //lo hicimos de manera ordenada, ademas puede reutilizarse en otros metodos.
-    public static void mostrarEnOrdenCreacion(HashMap<Integer, Soldado> ejercito){
-        for(int key : ejercito.keySet()){
-            System.out.println(ejercito.get(key));
-        }
-    }
     
     public static void aleatorio(HashMap<Integer, Soldado> ejercito){
         Random rand = new Random();
@@ -140,8 +155,6 @@ public class VideoJuego5 {
             ej[r2] = aux;
         }
     }
-    
-
     
 
     public static void rankingMayorMenorBurbuja(HashMap<Integer, Soldado> ejercito) {
